@@ -10,25 +10,29 @@ const Login = () => {
   const [novaSenha, setNovaSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [error, setError] = useState('');
-  const [firstPass, setFirstPass] = useState(false); // Novo estado para indicar se é a primeira senha
+  const [firstPass, setFirstPass] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/auth/login', { email, password, novaSenha, confirmarSenha });
-      const { token, user, firstPass: firstLogin } = response.data;
-      
-      if (firstLogin) {
-        setFirstPass(true); // Define o estado de primeira senha
+      const { token, user, firstPass: isFirstPass, admin } = response.data;
+
+      if (isFirstPass) {
+        setFirstPass(true);
       } else {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('userNAME', `${user.name} ${user.last_name}`);
+        localStorage.setItem('admin', admin);  // Salva o tipo de usuário (admin ou não)
         router.push('/dashboard');
       }
     } catch (err) {
       setError(err.response.data.error);
+      if (err.response.data.firstPass) {
+        setFirstPass(true);
+      }
     }
   };
 
@@ -57,7 +61,7 @@ const Login = () => {
             required 
           />
         </div>
-        
+
         {firstPass && (
           <>
             <div className={styles.formGroup}>
@@ -82,12 +86,9 @@ const Login = () => {
             </div>
           </>
         )}
-        
+
         <button type="submit" className={styles.button}>Login</button>
       </form>
-      <p className={styles.registerLink}>
-        Não tem uma conta? <Link href="/auth/register">Cadastre-se aqui</Link>
-      </p>
 
       <p className={styles.registerLink}>
         Esqueceu sua senha? <Link href="/auth/forgot-password">Recupere aqui</Link>

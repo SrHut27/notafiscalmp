@@ -1,3 +1,5 @@
+const { createAdmin } = require('../functions/createAdmin');
+
 const tableDatas = `
 CREATE TABLE IF NOT EXISTS datas (
     id SERIAL PRIMARY KEY,
@@ -34,20 +36,28 @@ CREATE TABLE IF NOT EXISTS edicoes (
     quantidade VARCHAR(255) NOT NULL,
     data TIMESTAMP DEFAULT Now()
 )
-`
+`;
 
-const createTables = (connection) => {
+const createTables = async (connection) => {
+    try {
+        await connection.query(tableDatas);
+        console.log("TABELA DADOS - PRONTA");
 
-    connection.query(tableDatas)
-    .then(() => console.log("TABELA DADOS - PRONTA"))
-    .catch((error) => console.log("TABELA DADOS - ERRO:", error));
-    
-    connection.query(tableUsers)
-    .then(() => console.log("TABELA USERS - PRONTA"))
-    .catch((error) => console.log("TABELA USERS - ERRO:", error));
+        await connection.query(tableUsers);
+        console.log("TABELA USERS - PRONTA");
 
-    connection.query(tableEdicao)
-    .then(() => console.log("TABELA EDIÇÕES - PRONTA"))
-    .catch((error) => console.log("TABELA EDIÇÕES - ERRO:", error))
-}
-module.exports = {createTables}
+        const adminQueryResult = await connection.query("SELECT * FROM users WHERE admin = true");
+
+        if (adminQueryResult.rows.length === 0) {
+            console.log("Nenhum administrador encontrado. Criando administrador primário...");
+            await createAdmin();
+        }
+
+        await connection.query(tableEdicao);
+        console.log("TABELA EDIÇÕES - PRONTA");
+    } catch (error) {
+        console.error("ERRO AO CRIAR TABELAS:", error);
+    }
+};
+
+module.exports = { createTables };

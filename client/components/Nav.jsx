@@ -1,7 +1,5 @@
-// Nav.jsx
-
 import React, { useState, useEffect } from 'react';
-import styles from '../pages/styles/NavStyle.module.css'; 
+import styles from '../pages/styles/NavStyle.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
@@ -9,31 +7,36 @@ import { useRouter } from 'next/router';
 
 const Nav = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showLogout, setShowLogout] = useState(false); 
+  const [showLogout, setShowLogout] = useState(false);
   const [username, setUsername] = useState('');
-  const router = useRouter(); 
+  const [isAdmin, setIsAdmin] = useState(false);  // Estado para armazenar se o usuário é admin
+  const router = useRouter();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('userNAME');
+    const adminStatus = localStorage.getItem('admin');  // Busca se o usuário é admin no localStorage
     if (storedUsername) {
       setUsername(storedUsername);
     }
-  }, []); 
+    if (adminStatus === 'true') {
+      setIsAdmin(true);
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('token'); 
+      const token = localStorage.getItem('token');
       const config = {
         headers: {
-          Authorization: `Bearer ${token}` 
+          Authorization: `Bearer ${token}`
         }
       };
       await axios.get('http://localhost:3001/auth/logout', config);
-      
+
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('userNAME');
-      
+      localStorage.removeItem('admin');  
       router.push('/');
     } catch (error) {
       console.error('Erro ao realizar logout:', error);
@@ -50,7 +53,9 @@ const Nav = () => {
       </div>
       <div className={styles["navbar-links"]}>
         <Link href="/notas" className={styles["navbar-link"]}>Consultar notas</Link>
+        {isAdmin && (  // Renderiza "Adicionar nota" apenas se o usuário for admin
         <Link href="/notas/add" className={styles["navbar-link"]}>Adicionar nota</Link>
+       )}
         <div 
           className={styles.dropdown} 
           onMouseEnter={() => setShowDropdown(true)}
@@ -66,6 +71,9 @@ const Nav = () => {
           )}
         </div>
       </div>
+        {isAdmin && (  
+        <Link href="/auth/register" className={styles["navbar-link"]}>Adicionar Usuário</Link>
+       )}
       <div 
         className={styles["user-info"]}
         onMouseEnter={() => setShowLogout(true)} 

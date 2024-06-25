@@ -36,7 +36,7 @@ function IndexPage() {
                 <p className={styles.navLink}>Acessar</p>
               </Link>
               <Link href="/auth/register">
-                <p className={styles.navLink}>Registrar</p>
+                <p className={styles.navLink}>Como acessar?</p>
               </Link>
             </div>
           </nav>
@@ -55,8 +55,8 @@ function IndexPage() {
                 <Link href="/auth/login">
                   <p className={styles.loginButton}>Acessar</p>
                 </Link>
-                <Link href="/auth/register">
-                  <p className={styles.registerButton}>Registrar</p>
+                <Link href="/auth/como_acessar">
+                  <p className={styles.registerButton}>Como acessar?</p>
                 </Link>
               </div>
             </div>

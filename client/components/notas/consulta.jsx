@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../pages/styles/notas/SearchNotas.module.css";
 import ConfirmModal from "../_modals/ConfirmModal";
-import {useRouter} from "next/router"
+import { useRouter } from "next/router";
 
 const SearchNotas = () => {
   const [valor, setValor] = useState("");
@@ -13,10 +13,16 @@ const SearchNotas = () => {
   const [resultados, setResultados] = useState([]);
   const [error, setError] = useState("");
   const [mostrarFormulario, setMostrarFormulario] = useState(true);
-  const [showConfirmModal, setShowConfirmModal] = useState(false); 
-  const [notaToDelete, setNotaToDelete] = useState(null); 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [notaToDelete, setNotaToDelete] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false); // Estado para verificar se o usuário é administrador
 
   const router = useRouter();
+
+  useEffect(() => {
+    const adminStatus = localStorage.getItem("admin"); // Verifica se o usuário é administrador no localStorage
+    setIsAdmin(adminStatus === "true");
+  }, []);
 
   // Função para buscar notas
   const handleSearch = async () => {
@@ -29,10 +35,10 @@ const SearchNotas = () => {
 
     try {
       const response = await axios.get("http://localhost:3001/file/search", { params });
-      const formattedResults = response.data.resultado.map(nota => ({
+      const formattedResults = response.data.resultado.map((nota) => ({
         ...nota,
         data_emissao: new Date(nota.data_emissao).toLocaleDateString(),
-        data_registro: new Date(nota.data_registro).toLocaleDateString()
+        data_registro: new Date(nota.data_registro).toLocaleDateString(),
       }));
       setResultados(formattedResults);
       setError("");
@@ -46,17 +52,21 @@ const SearchNotas = () => {
   // Função para deletar nota
   const handleDelete = async () => {
     if (!notaToDelete) return;
-  
+
     try {
       const token = localStorage.getItem("token");
-  
-      await axios.post(`http://localhost:3001/file/delete/${notaToDelete}`, {}, {
-        headers: {
-            'Authorization': `Bearer ${token}`
+
+      await axios.post(
+        `http://localhost:3001/file/delete/${notaToDelete}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
-  
-      setResultados(resultados.filter(nota => nota.id !== notaToDelete));
+      );
+
+      setResultados(resultados.filter((nota) => nota.id !== notaToDelete));
       setShowConfirmModal(false);
       setNotaToDelete(null);
     } catch (err) {
@@ -64,10 +74,10 @@ const SearchNotas = () => {
       if (err.response && err.response.status === 401) {
         setError("Sua sessão expirou. Redirecionando para o login...");
         setTimeout(() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          localStorage.removeItem('userNAME');
-          router.push('/auth/login');
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("userNAME");
+          router.push("/auth/login");
         }, 3000);
       } else {
         setError(err.response?.data?.error || "Erro ao deletar nota");
@@ -148,7 +158,9 @@ const SearchNotas = () => {
             />
           </div>
 
-          <button onClick={handleSearch} className={styles.button}>Buscar</button>
+          <button onClick={handleSearch} className={styles.button}>
+            Buscar
+          </button>
         </>
       )}
 
@@ -158,7 +170,7 @@ const SearchNotas = () => {
         <div className={styles.resultsContainer}>
           <h2 className={styles.resultsHeading}>Resultados</h2>
           <ul className={styles.resultsList}>
-            {resultados.map(nota => (
+            {resultados.map((nota) => (
               <li key={nota.id} className={styles.resultItem}>
                 <strong>CNPJ:</strong> {nota.cnpj} <br />
                 <strong>Emitente:</strong> {nota.emitente} <br />
@@ -167,16 +179,21 @@ const SearchNotas = () => {
                 <strong>Valor da Nota:</strong> R$ {nota.valor_nota} <br />
                 <strong>Data de Registro:</strong> {nota.data_registro} <br />
                 <strong>Crédito:</strong> R$ {nota.valor_credito} <br />
-                <button
-                  onClick={() => confirmDelete(nota.id)}
-                  className={styles.deleteButton}
-                >
-                  Apagar Nota
-                </button>
+                {isAdmin && ( // Renderiza o botão apenas se o usuário for administrador
+                  <button
+                    onClick={() => confirmDelete(nota.id)}
+                    className={styles.deleteButton}
+                  >
+                    Apagar Nota
+                  </button>
+                )}
               </li>
             ))}
           </ul>
-          <button onClick={handleClearResults} className={`${styles.clearButton} ${styles.fixedButton}`}>
+          <button
+            onClick={handleClearResults}
+            className={`${styles.clearButton} ${styles.fixedButton}`}
+          >
             Limpar Resultados
           </button>
         </div>
@@ -189,6 +206,6 @@ const SearchNotas = () => {
       />
     </div>
   );
-}
+};
 
 export default SearchNotas;

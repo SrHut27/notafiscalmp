@@ -2,12 +2,14 @@ const express = require("express");
 const router = express.Router();
 
 // Importando controles:
-const {registerControll, 
+const { 
+    registerControll, 
     loginControll, 
     verifyToken, 
     forgotPasswordControll, 
-    resetPasswordPOST,
-    logoutControll} = require("../controllers/authController");
+    resetPasswordPOST, 
+    logoutControll 
+} = require("../controllers/authController");
 
 router.post("/register", (req, res) => {
     registerControll(req, res);
@@ -30,6 +32,5 @@ router.post("/reset-password/:token", (req, res) => {
 router.get('/verify-token', verifyToken, (req, res) => {
     res.status(200).json({ message: 'Token válido.' });
 });
-
 
 module.exports = router;

@@ -10,6 +10,12 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [admin, setAdmin] = useState(false); // Novo estado para administrador
   const [error, setError] = useState('');
+
+  const token = localStorage.getItem('token');
+  if (!token) {
+    router.push('/auth/login');
+    return;
+  }
   const router = useRouter();
 
   const handleRegister = async (e) => {
@@ -24,7 +30,7 @@ const Register = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Cadastrar</h2>
+      <h2 className={styles.title}>Cadastrar novo usuário</h2>
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleRegister} className={styles.form}>
         <div className={styles.formGroup}>
@@ -70,7 +76,7 @@ const Register = () => {
         <button type="submit" className={styles.button}>Cadastrar</button>
       </form>
       <p className={styles.loginLink}>
-        Você já tem uma conta? <Link href="/auth/login">Conecte-se por aqui!</Link>
+        Deseja retornar? <Link href="/dashboard">Volte a Dashboard!</Link>
       </p>
       <button className={styles.homeButton} onClick={() => router.push('/')}>Página inicial</button>
     </div>

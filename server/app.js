@@ -9,10 +9,11 @@ const PORT = 3001;
 const app = express();
 
 app.use(session({
-    saveUninitialized: true,
     secret: process.env.SECRET,
-    resave: true
-}))
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } 
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));

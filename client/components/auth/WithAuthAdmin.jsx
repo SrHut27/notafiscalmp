@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-const withAuth = (WrappedComponent) => {
+const withAdminAuth = (WrappedComponent) => {
   return (props) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-      const verifyToken = async () => {
+      const checkAdmin = async () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.admin) {
+          router.push('/auth/login');
+          return;
+        }
+
         const token = localStorage.getItem('token');
         if (!token) {
           router.push('/auth/login');
@@ -20,7 +26,7 @@ const withAuth = (WrappedComponent) => {
           await axios.get('http://localhost:3001/auth/verify-token', {
             headers: { Authorization: `Bearer ${token}` },
           });
-          setIsAuthenticated(true);
+          setIsAdmin(true);
         } catch (err) {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
@@ -30,14 +36,14 @@ const withAuth = (WrappedComponent) => {
         }
       };
 
-      verifyToken();
+      checkAdmin();
     }, []);
 
     if (isLoading) {
       return <div>Loading...</div>;
     }
 
-    if (!isAuthenticated) {
+    if (!isAdmin) {
       return null;
     }
 
@@ -45,4 +51,4 @@ const withAuth = (WrappedComponent) => {
   };
 };
 
-export default withAuth;
+export default withAdminAuth;
