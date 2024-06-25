@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.chartWrapper {
+  width: 100%;
+  max-width: 1200px;
+  height: 90%;
+  padding: 20px;
+}
+
+.chartTitle {
+  text-align: center;
+  font-family: 'Poppins', Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .chartWrapper {
+    padding: 10px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .chartTitle {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,8 @@
+create a file named ".env" in server paste, with the following informations:
+
+DATABASE_HOST 
+DATABASE_USER 
+DATABASE_PASS 
+DATABASE_NAME 
+
+SECRET

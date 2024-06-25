@@ -1,0 +1,103 @@
+/* components/dashboard/TotaletresMeses.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    font-family: "Poppins";
+}
+
+.chartContainer, .totalsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.chartContainer {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    height: 110vh; 
+    
+}
+
+.chart {
+    width: 100%; 
+    height: auto;
+}
+
+.chart h2 {
+    text-align: center;
+}
+
+.totalsContainer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.post_it {
+    width: 45%;
+    padding: 20px;
+    background-color: #ffe260;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 10px;
+    }
+
+    .post_it {
+        padding: 15px;
+    }
+
+    .chartContainer {
+        padding: 15px;
+        height: auto;
+        margin-bottom: 0px; 
+    }
+
+    .chart h2 {
+        font-size: 1.2em;
+    }
+
+    .totalsContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .post_it {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 375px) {
+    .dashboard {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .post_it {
+        padding: 10px;
+    }
+
+    .chartContainer {
+        padding: 10px;
+    }
+
+    .chart h2 {
+        font-size: 1em;
+    }
+
+    .post_it {
+        width: 100%;
+    }
+}

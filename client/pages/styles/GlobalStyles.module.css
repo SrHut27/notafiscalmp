@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.header {
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0.5rem 0; /* Reduzindo a grossura da navbar */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem; /* Ajustando padding da navbar */
+}
+
+.logo img {
+  width: 150px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.navLink {
+  font-size: 0.875rem;
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #0056b3;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(to right, rgba(0, 123, 255, 0.7), rgba(40, 167, 69, 0.7)), url('/images/banner.webp') center/cover no-repeat;
+  color: white;
+}
+
+.heroImage {
+  display: none; /* Escondido para tornar a seção hero uniforme */
+}
+
+.heroContent {
+  z-index: 1;
+}
+
+.heroText {
+  max-width: 800px;
+  animation: fadeIn 1.5s ease;
+}
+
+.heroText h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.heroText p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.loginButton,
+.registerButton {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+  color: white;
+}
+
+.loginButton {
+  background-color: #007bff;
+}
+
+.registerButton {
+  background-color: #28a745;
+}
+
+.loginButton:hover,
+.registerButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .heroText h1 {
+    font-size: 2.5rem;
+  }
+
+  .heroText p {
+    font-size: 1rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .navLinks {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .heroText h1 {
+    font-size: 2rem;
+  }
+
+  .heroText p {
+    font-size: 0.875rem;
+  }
+}
+
+/* Adicione ao final do arquivo GlobalStyles.module.css */
+
+.contentSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  flex-wrap: wrap; /* Permite que a imagem vá para cima do texto em telas menores */
+}
+
+.contentText {
+  max-width: 600px;
+  order: 2; /* Ordem padrão para o texto */
+  flex: 1; /* Faz com que o texto e a imagem ocupem espaço igualmente */
+}
+
+
+.contentText h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contentText p {
+  font-size: 1rem;
+}
+
+.contentImage {
+  order: 1; /* Ordem padrão para a imagem */
+  flex: 1; /* Faz com que o texto e a imagem ocupem espaço igualmente */
+}
+
+.contentImage img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.iconCollection {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.iconItem {
+  text-align: center;
+  flex: 1; /* Faz com que todos os ícones tenham o mesmo espaço */
+}
+
+.iconItem img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1rem;
+}
+
+.iconItem p {
+  font-size: 1rem;
+}
+
+/* Responsividade para a seção de conteúdo */
+@media (max-width: 768px) {
+  .contentSection {
+    flex-direction: column;
+  }
+
+  .contentText {
+    order: 2; /* Garante que o texto fique abaixo da imagem */
+  }
+
+  .contentImage {
+    order: 1; /* Garante que a imagem fique acima do texto */
+  }
+}

@@ -1,0 +1,4 @@
+/node_modules
+/.next/cache
+/.next/static
+/.next/server
