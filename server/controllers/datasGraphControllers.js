@@ -1,31 +1,34 @@
 const connection = require("../configs/database_connection");
 
-const getTopFiveEmitentes = async (req, res) => {
-    console.log(req.session.user)
-    try {
-        const query = `SELECT emitente, SUM(valor_credito) 
-        AS total_Credito FROM datas 
-        WHERE emitente IS NOT NULL 
-        GROUP BY emitente ORDER BY total_credito 
-        DESC LIMIT 5`;
-        const topFiveEmitentes = await connection.query(query);
+const getTopEmitentes = async (req, res) => {
+    const { mes, ano, limit = 5 } = req.query;
 
-        if (topFiveEmitentes.rows.length === 0) {
-            res.status(400).json({
-                error: `Não há dados para mostrar...`
-            });
-            return;
+    try {
+        let query = `
+            SELECT emitente, SUM(valor_credito) AS total_credito
+            FROM datas
+            WHERE emitente IS NOT NULL
+        `;
+
+        if (mes && ano) {
+            query += ` AND EXTRACT(MONTH FROM data_emissao) = ${mes} AND EXTRACT(YEAR FROM data_emissao) = ${ano}`;
+        }
+
+        query += ` GROUP BY emitente ORDER BY total_credito DESC LIMIT ${limit}`;
+
+        const topEmitentes = await connection.query(query);
+
+        if (topEmitentes.rows.length === 0) {
+            res.status(400).json({ error: "Não há dados para mostrar..." });
         } else {
-            res.status(200).json({
-                resultado: topFiveEmitentes.rows,
-            })
+            res.status(200).json({ resultado: topEmitentes.rows });
         }
     } catch (error) {
-        console.log("Erro ao buscar dados:", error);
-        res.status(500).json({ error: `Não foi possível conectar com o banco de dados` });
-        return;
+        console.error("Erro ao buscar dados:", error);
+        res.status(500).json({ error: "Não foi possível conectar com o banco de dados" });
     }
 }
+
 
 const getValorByDataEmissao = async (req, res) => {
     try {
@@ -186,4 +189,4 @@ const getValorNotasAnoMes = async (req, res) => {
 
 
 
-module.exports = {getTopFiveEmitentes, getValorByDataEmissao, getValorNotasAnoMes}
+module.exports = {getTopEmitentes, getValorByDataEmissao, getValorNotasAnoMes}

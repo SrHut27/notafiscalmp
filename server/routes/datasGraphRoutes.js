@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const {getTopFiveEmitentes, 
+const {getTopEmitentes, 
     getValorByDataEmissao, 
     getValorNotasAnoMes} = require("../controllers/datasGraphControllers");
 
-router.get("/top5", (req, res) => {
-    getTopFiveEmitentes(req, res);
+router.get("/top-emitentes", (req, res) => {
+    getTopEmitentes(req, res);
 });
 
 router.get("/data", (req, res) => {

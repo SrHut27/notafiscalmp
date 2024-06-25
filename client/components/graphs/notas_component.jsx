@@ -38,11 +38,13 @@ const ColumnChart = () => {
                         label: 'Total de Notas',
                         data: totalNotasArray,
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        yAxisID: 'y-notas',
                     },
                     {
                         label: 'Total de Crédito',
                         data: totalCreditoArray,
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        yAxisID: 'y-credito',
                     }
                 ]
             });
@@ -65,7 +67,6 @@ const ColumnChart = () => {
             return new Intl.NumberFormat('pt-BR').format(value);
         }
     };
-    
 
     return (
         <div className={styles.dashboard}>
@@ -95,8 +96,8 @@ const ColumnChart = () => {
             <div className={styles.chartAndTableContainer}>
                 <div className={styles.chartContainer}>
                     <h2>Total de Notas e Crédito</h2>
-                    <Bar 
-                        data={chartData} 
+                    <Bar
+                        data={chartData}
                         options={{
                             responsive: true,
                             animation: {
@@ -108,7 +109,7 @@ const ColumnChart = () => {
                                 },
                                 tooltip: {
                                     callbacks: {
-                                        label: function(context) {
+                                        label: function (context) {
                                             let label = context.dataset.label || '';
                                             if (label) {
                                                 label += ': ';
@@ -130,23 +131,37 @@ const ColumnChart = () => {
                                         text: 'Data',
                                     },
                                 },
-                                y: {
+                                'y-credito': {
+                                    type: 'linear',
+                                    position: 'left',
                                     title: {
                                         display: true,
-                                        text: 'Valor',
+                                        text: 'Total de Crédito (BRL)',
                                     },
                                     ticks: {
-                                        callback: function(value, index, values) {
-                                            if (index === 0) {
-                                                return formatCurrency(value, false); 
-                                            } else {
-                                                return formatCurrency(value);
-                                            }
+                                        callback: function (value) {
+                                            return formatCurrency(value);
                                         }
-                                    }
+                                    },
                                 },
+                                'y-notas': {
+                                    type: 'linear',
+                                    position: 'right',
+                                    title: {
+                                        display: true,
+                                        text: 'Total de Notas',
+                                    },
+                                    ticks: {
+                                        callback: function (value) {
+                                            return formatCurrency(value, false);
+                                        }
+                                    },
+                                    grid: {
+                                        drawOnChartArea: false, // Only show grid lines for the left y-axis
+                                    }
+                                }
                             },
-                        }} 
+                        }}
                     />
                 </div>
             </div>

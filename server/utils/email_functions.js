@@ -64,22 +64,29 @@ function generateResetToken() {
   return token;
 }
 
-// Função para enviar email de boas-vindas com senha temporária
 function sendWelcomeEmail(email, password) {
   const mailOptions = {
     from: "notafiscal@mariaperegrina.com",
     to: email,
     subject: "Boas-vindas ao Sistema NOTA FISCAL Maria Peregrina",
     html: `
-            <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
-                <p>Olá,</p>
-                <p>Bem-vindo ao Sistema NOTA FISCAL Maria Peregrina!</p>
-                <p>Sua conta foi criada com sucesso. Aqui estão suas credenciais temporárias:</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Senha Temporária:</strong> ${password}</p>
-                <p>Por favor, faça login e altere sua senha na primeira vez que acessar o sistema.</p>
-                <p>Atenciosamente,</p>
-                <p style="font-weight: bold;">Sistema NOTA FISCAL Maria Peregrina</p>
+            <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333; background-color: #f5f5f5; padding: 20px; border-radius: 10px; max-width: 600px; margin: 0 auto;">
+                <div style="background-color: #3f51b5; padding: 10px 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                    <h1 style="color: #ffffff; margin: 0;">Bem-vindo ao Sistema NOTA FISCAL Maria Peregrina</h1>
+                </div>
+                <div style="padding: 20px; background-color: #ffffff; border-radius: 0 0 10px 10px;">
+                    <p>Olá,</p>
+                    <p>Bem-vindo ao Sistema NOTA FISCAL Maria Peregrina!</p>
+                    <p>Sua conta foi criada com sucesso. Aqui estão suas credenciais temporárias:</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Senha Temporária:</strong> ${password}</p>
+                    <p>Por favor, faça login e altere sua senha na primeira vez que acessar o sistema.</p>
+                    <p>Atenciosamente,</p>
+                    <p style="font-weight: bold; color: #3f51b5;">Sistema NOTA FISCAL Maria Peregrina</p>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="https://mariaperegrina.com" style="display: inline-block; padding: 10px 20px; background-color: #3f51b5; color: #ffffff; text-decoration: none; border-radius: 5px;">Acessar Sistema</a>
+                </div>
             </div>
         `,
   };
@@ -91,6 +98,7 @@ function sendWelcomeEmail(email, password) {
     }
   });
 }
+
 
 // Exportando as funções
 module.exports = {

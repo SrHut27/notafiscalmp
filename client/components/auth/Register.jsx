@@ -22,7 +22,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/auth/register', { name, lastName, email, admin });
-      router.push('/auth/login');
+      router.push('/dashboard');
     } catch (err) {
       setError(err.response.data.error);
     }

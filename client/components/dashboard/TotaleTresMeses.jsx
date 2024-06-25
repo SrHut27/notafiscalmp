@@ -36,14 +36,16 @@ const Total = () => {
                 data: tresMesesDados.map(d => d.total_credito),
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                tension: 0.1,
+                yAxisID: 'y',
             },
             {
                 label: 'Total de Notas',
                 data: tresMesesDados.map(d => d.total_notas),
                 fill: false,
                 borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1
+                tension: 0.1,
+                yAxisID: 'y1',
             }
         ]
     };
@@ -59,7 +61,24 @@ const Total = () => {
             y: {
                 title: {
                     display: true,
-                    text: 'Valor'
+                    text: 'Total de Crédito'
+                },
+                position: 'left',
+                ticks: {
+                    beginAtZero: true
+                }
+            },
+            y1: {
+                title: {
+                    display: true,
+                    text: 'Total de Notas'
+                },
+                position: 'right',
+                grid: {
+                    drawOnChartArea: false
+                },
+                ticks: {
+                    beginAtZero: true
                 }
             }
         },

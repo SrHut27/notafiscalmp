@@ -1,7 +1,7 @@
 import React from "react";
 import AddNoteComponent from "../../components/notas/addNotas";
 import {Nav} from "../../components/Nav";
-import withAuth from "../../components/auth/WithAuth";
+import withAdminAuth from "../../components/auth/WithAuthAdmin"
 
 function AddNotasPage() {
    return (
@@ -12,4 +12,4 @@ function AddNotasPage() {
    )
 }
 
-export default withAuth(AddNotasPage);
+export default withAdminAuth(AddNotasPage);
