@@ -43,18 +43,23 @@ const addMeta = async (req, res) => {
 };
 
 const searchMeta = async (req, res) => {
-    const { mes, ano } = req.method === "GET" ? req.query : req.body;
-
-    if (!mes || !ano) {
-        res.status(400).json({
-            error: "Se deseja buscar uma meta, selecione um mês e um ano",
-        });
-        return;
-    }
+    let { mes, ano } = req.method === "GET" ? req.query : req.body;
 
     try {
-        const metaQuery = "SELECT * FROM metas WHERE mes = $1 AND ano = $2";
-        const metaData = [mes, ano];
+        let metaQuery, metaData;
+        
+        if (!mes || !ano) {
+            metaQuery = `
+                SELECT * FROM metas
+                ORDER BY ano DESC, mes DESC
+                LIMIT 1
+            `;
+            metaData = [];
+        } else {
+            metaQuery = "SELECT * FROM metas WHERE mes = $1 AND ano = $2";
+            metaData = [mes, ano];
+        }
+        
         const metaResult = await connection.query(metaQuery, metaData);
 
         if (metaResult.rows.length === 0) {
@@ -63,6 +68,10 @@ const searchMeta = async (req, res) => {
             });
             return;
         }
+
+        const latestMeta = metaResult.rows[0];
+        mes = latestMeta.mes;
+        ano = latestMeta.ano;
 
         const notasQuery = `
             SELECT 
@@ -77,7 +86,7 @@ const searchMeta = async (req, res) => {
 
         res.status(200).json({
             metas: metaResult.rows,
-            notas: notasResult.rows[0], // Summarized results
+            notas: notasResult.rows[0] || { total_credito: 0, total_notas: 0 },
         });
     } catch (error) {
         console.log(error);
