@@ -32,12 +32,14 @@ const fileRoutes = require("./routes/filesRoutes");
 const graphRoutes = require("./routes/datasGraphRoutes");
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const metasRoutes = require("./routes/metasRoutes");
 
 // Aplicação de rotas:
 app.use("/file", fileRoutes);
 app.use("/graph", graphRoutes);
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/metas", metasRoutes);
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log("app is running...")

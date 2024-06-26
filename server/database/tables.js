@@ -38,6 +38,18 @@ CREATE TABLE IF NOT EXISTS edicoes (
 )
 `;
 
+const tableMetas = `
+CREATE TABLE IF NOT EXISTS metas (
+    id SERIAL PRIMARY KEY,
+    mes INT NOT NULL,
+    ano INT NOT NULL,
+    meta_credito FLOAT NOT NULL,
+    meta_notas INT NOT NULL,
+    administrador VARCHAR(255) NOT NULL,
+    data_cadastro TIMESTAMP DEFAULT Now()
+)
+`
+
 const createTables = async (connection) => {
     try {
         await connection.query(tableDatas);
@@ -55,6 +67,10 @@ const createTables = async (connection) => {
 
         await connection.query(tableEdicao);
         console.log("TABELA EDIÇÕES - PRONTA");
+
+        await connection.query(tableMetas);
+        console.log("TABELA METAS - PRONTAS");
+        
     } catch (error) {
         console.error("ERRO AO CRIAR TABELAS:", error);
     }

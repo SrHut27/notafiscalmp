@@ -32,7 +32,7 @@ const Total = () => {
         labels: tresMesesDados.map(d => `${d.mes}/${d.ano}`),
         datasets: [
             {
-                label: 'Total de Crédito',
+                label: 'Total de Crédito (R$)',
                 data: tresMesesDados.map(d => d.total_credito),
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
@@ -61,11 +61,14 @@ const Total = () => {
             y: {
                 title: {
                     display: true,
-                    text: 'Total de Crédito'
+                    text: 'Total de Crédito (R$)'
                 },
                 position: 'left',
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    callback: function (value) {
+                        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    }
                 }
             },
             y1: {
@@ -88,7 +91,16 @@ const Total = () => {
                 position: 'top'
             },
             tooltip: {
-                enabled: true
+                enabled: true,
+                callbacks: {
+                    label: function (context) {
+                        if (context.dataset.label === 'Total de Crédito (R$)') {
+                            return context.dataset.label + ': ' + context.raw.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        } else {
+                            return context.dataset.label + ': ' + context.raw;
+                        }
+                    }
+                }
             }
         }
     };
