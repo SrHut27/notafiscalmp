@@ -1,55 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-.ultimaEdicao {
-    color: #000000;
-    background-color: #e6e6e6;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 1s ease-in-out;
-    font-family: "Poppins";
+.dashboardContainer {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e6e6e6;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+  font-family: "Poppins";
+}
+
+.section {
+  flex: 1;
+  padding: 20px;
+}
+
+.separator {
+  width: 1px;
+  background-color: #ccc;
+  margin: 0 20px;
+}
+
+.ultimaEdicao h3, .ultimaMeta h3 {
+  margin-top: 0;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Estilo para diferentes estados */
+.adicao {
+  color: green;
+}
+
+.edicao {
+  color: orange;
+}
+
+.exclusao {
+  color: red;
+}
+
+.default {
+  color: black;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .dashboardContainer {
+    flex-direction: column;
+    padding: 15px;
   }
-  
-  .ultimaEdicao h3 {
-    margin-top: 0;
+  .separator {
+    display: none;
   }
-  
-  .error {
-    color: red;
-    margin-top: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  /* Estilo para diferentes estados */
-  .adicao {
-    color: green;
+  to {
+    opacity: 1;
   }
-  
-  .edicao {
-    color: orange;
-  }
-  
-  .exclusao {
-    color: red;
-  }
-  
-  .default {
-    color: black;
-  }
-  
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .ultimaEdicao {
-      padding: 15px;
-    }
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
+}

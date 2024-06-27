@@ -99,7 +99,7 @@ const searchMeta = async (req, res) => {
 
 
 const deleteMeta = async (req, res) => {
-    const {metaID} = req.params;
+    const { metaID } = req.params;
 
     try {
         const existeMeta = await connection.query("SELECT * FROM metas WHERE id = $1", [metaID]);
@@ -110,10 +110,10 @@ const deleteMeta = async (req, res) => {
             });
             return;
         } else {
-            await connection.query("DELETE FROM metas WHERE id = $1", metaID);
+            await connection.query("DELETE FROM metas WHERE id = $1", [metaID]);
 
-            res.status(302).json({
-                resultado: `A meta da data: ${mes+"/"+ano} foi apagada com sucesso!`,
+            res.status(200).json({
+                resultado: `A meta de ID ${metaID} foi apagada com sucesso!`,
             });
         }
     } catch (error) {
@@ -123,6 +123,53 @@ const deleteMeta = async (req, res) => {
         });
         return;
     }
-}
+};
 
-module.exports = { addMeta, searchMeta, deleteMeta };
+const ultimaMeta = async (req, res) => {
+    try {
+        const ultimaMetaResult = await connection.query(`
+            SELECT * FROM metas
+            ORDER BY ano DESC, mes DESC
+            LIMIT 1
+        `);
+
+        if (ultimaMetaResult.rows.length === 0) {
+            res.status(404).json({
+                error: "Nenhuma meta encontrada.",
+            });
+            return;
+        }
+
+        res.status(200).json(ultimaMetaResult.rows[0]);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: "Não foi possível conectar com o banco de dados. Tente novamente mais tarde.",
+        });
+    }
+};
+
+const todasMetas = async (req, res) => {
+    try {
+        const ultimaMetaResult = await connection.query(`
+            SELECT * FROM metas
+            ORDER BY ano DESC, mes DESC
+        `);
+
+        if (ultimaMetaResult.rows.length === 0) {
+            res.status(404).json({
+                error: "Nenhuma meta encontrada.",
+            });
+            return;
+        }
+
+        res.status(200).json(ultimaMetaResult.rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: "Não foi possível conectar com o banco de dados. Tente novamente mais tarde.",
+        });
+    }
+};
+
+module.exports = { addMeta, searchMeta, deleteMeta, ultimaMeta, todasMetas };

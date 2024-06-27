@@ -8,7 +8,9 @@ const {verifyToken} = require("../controllers/authController");
 const { 
     addMeta,
     searchMeta,
-    deleteMeta
+    deleteMeta,
+    ultimaMeta,
+    todasMetas
     } = require("../controllers/metasController");
 
 router.post("/add", verifyToken, addMeta);
@@ -16,6 +18,10 @@ router.post("/add", verifyToken, addMeta);
 router.get("/", searchMeta);
 router.post("/", searchMeta);
 
-router.post("/delete/:metaID", deleteMeta);
+router.post("/delete/:metaID", verifyToken, deleteMeta);
+
+router.get("/ultima", ultimaMeta);
+
+router.get("/todas", todasMetas);
 
 module.exports = router;

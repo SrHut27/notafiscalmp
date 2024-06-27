@@ -22,7 +22,7 @@ const SearchMetaChart = () => {
             const notasData = response.data.notas;
 
             const newChartData = {
-                labels: ['Crédito', 'Notas', 'Meta de Crédito', 'Meta de Notas'],
+                labels: ['Crédito', 'Meta de Crédito', 'Notas', 'Meta de Notas'],
                 datasets: [
                     {
                         label: 'Valor de Crédito',
