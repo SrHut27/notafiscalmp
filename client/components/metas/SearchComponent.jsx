@@ -35,6 +35,7 @@ const SearchMetaChart = () => {
                         data: [0, 0, notasData.total_notas, 0],
                         backgroundColor: 'rgba(255, 99, 132, 0.8)',
                         barThickness: 200,
+                        yAxisID: 'y1',
                     },
                     {
                         label: 'Meta de Crédito',
@@ -47,6 +48,7 @@ const SearchMetaChart = () => {
                         data: [0, 0, 0, metaData.meta_notas],
                         backgroundColor: 'rgba(255, 99, 132, 0.4)',
                         barThickness: 200,
+                        yAxisID: 'y1',
                     }
                 ]
             };
@@ -145,7 +147,7 @@ const SearchMetaChart = () => {
                                     text: 'Crédito em R$',
                                 },
                                 ticks: {
-                                    callback: function (value, index, values) {
+                                    callback: function (value) {
                                         return formatCurrency(value);
                                     },
                                 },
@@ -157,12 +159,12 @@ const SearchMetaChart = () => {
                                     text: 'Total de Notas',
                                 },
                                 ticks: {
-                                    callback: function (value, index, values) {
-                                        return value;
+                                    callback: function (value) {
+                                        return Number.isInteger(value) ? value : null;
                                     },
                                 },
                                 grid: {
-                                    drawOnChartArea: true,
+                                    drawOnChartArea: false,
                                 },
                             },
                         },

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 import styles from '../../pages/styles/metas/adicionarMetas.module.css';
 
 const AdicionarMetaForm = () => {
@@ -59,12 +60,21 @@ const AdicionarMetaForm = () => {
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <label className={styles.label}>Mês:</label>
-          <input
-            type="text"
-            value={mes}
-            onChange={(e) => setMes(e.target.value)}
-            className={styles.input}
-          />
+          <select value={mes} onChange={(e) => setMes(e.target.value)} className={styles.input}>
+            <option value="">Selecione o Mês</option>
+            <option value="1">Janeiro</option>
+            <option value="2">Fevereiro</option>
+            <option value="3">Março</option>
+            <option value="4">Abril</option>
+            <option value="5">Maio</option>
+            <option value="6">Junho</option>
+            <option value="7">Julho</option>
+            <option value="8">Agosto</option>
+            <option value="9">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Dezembro</option>
+          </select>
         </div>
         <div className={styles.formGroup}>
           <label className={styles.label}>Ano:</label>
@@ -95,6 +105,9 @@ const AdicionarMetaForm = () => {
         </div>
         <button type="submit" className={styles.submitButton}>Adicionar</button>
       </form>
+      <Link href="/metas">
+        <p>Voltar</p>
+      </Link>
     </div>
   );
 };

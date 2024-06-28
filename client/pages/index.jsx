@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import styles from "./styles/GlobalStyles.module.css";
 
 function IndexPage() {
@@ -25,6 +26,10 @@ function IndexPage() {
 
   return (
     <div className={styles.body}>
+      <Head>
+        <title>Sistema Nota Fiscal Maria PEregrina</title>
+        <link rel="icon" href="/icons/favicon.ico" />
+      </Head>
       <div className={styles.container}>
         <header className={styles.header}>
           <nav className={styles.navbar}>
@@ -92,6 +97,41 @@ function IndexPage() {
             </div>
           </div>
         </section>
+        <footer className={styles.footer}>
+          <div className={styles.footerContainer}>
+            <div className={styles.footerLogo}>
+              <img src="/images/logo.webp" alt="Logo" />
+            </div>
+            <div className={styles.footerLinks}>
+              <Link href="/sobre">
+                <p>Sobre</p>
+              </Link>
+              <Link href="/contato">
+                <p>Contato</p>
+              </Link>
+              <Link href="/privacidade">
+                <p>Privacidade</p>
+              </Link>
+              <Link href="/termos">
+                <p>Termos</p>
+              </Link>
+            </div>
+            <div className={styles.footerSocials}>
+              <a href="https://www.facebook.com/escolamariaperegrina.sjrp/" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/facebook-icon.svg" alt="Facebook" />
+              </a>
+              <a href="https://wa.link/55br52" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/whatsapp-icon.svg" alt="WhatsApp" />
+              </a>
+              <a href="https://www.instagram.com/escolamariaperegrina.sjrp/" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/instagram-icon.svg" alt="Instagram" />
+              </a>
+            </div>
+            <div className={styles.footerText}>
+              <p>&copy; {new Date().getFullYear()} Missões Maria Peregrina. Todos os direitos reservados.</p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

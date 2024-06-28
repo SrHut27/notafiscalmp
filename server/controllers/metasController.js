@@ -19,7 +19,7 @@ const addMeta = async (req, res) => {
         const existeMeta = await connection.query(existeMetaQuery, existeMetaData);
 
         if (existeMeta.rows.length > 0) {
-            res.status(403).json({
+            res.status(400).json({
                 error: "Já existe uma meta para esse mês e ano.",
             });
             return;

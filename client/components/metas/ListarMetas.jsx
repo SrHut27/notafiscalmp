@@ -70,7 +70,7 @@ const MetasList = () => {
       <div className={styles.metaList}>
         {metas.map((meta) => (
           <div key={meta.id} className={styles.metaCard}>
-            <p>Mês/Ano: {meta.mes}/{meta.ano}</p>
+            <p>Data: {meta.mes}/{meta.ano}</p>
             <p>Meta de Crédito: R$ {meta.meta_credito.toFixed(2)}</p>
             <p>Meta de Notas: {meta.meta_notas}</p>
             <p>Administrador: {meta.administrador}</p>

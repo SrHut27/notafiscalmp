@@ -39,8 +39,8 @@ function GraphsIndexPages() {
 
       <div className={styles.content}>
         <div className={styles.card} onClick={handleCardClickGraph3}>
-          <h2>Crédito x Dia</h2>
-          <p>Consulte um gráfico de pontos que mostra o retorno de crédito dos 31 últimos dias registrados no sistema.</p>
+          <h2>Total de notas e crédito</h2>
+          <p>Consulte qual foi o retorno de determinado mês.</p>
         </div>
       </div>
     </div>
